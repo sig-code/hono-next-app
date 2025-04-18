@@ -1,6 +1,10 @@
+'use client'
+
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
+import { useState } from "react";
+import Link from "next/link";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -19,9 +23,26 @@ const ThemeImage = (props: Props) => {
 };
 
 export default function Home() {
+  const [count, setCount] = useState(0);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <div className={styles.counter}>
+          <h2>SPA機能のデモ</h2>
+          <p>カウント: {count}</p>
+          <div className={styles.counterButtons}>
+            <button onClick={() => setCount(count - 1)}>-1</button>
+            <button onClick={() => setCount(count + 1)}>+1</button>
+            <button onClick={() => setCount(0)}>リセット</button>
+          </div>
+        </div>
+
+        <div className={styles.navigation}>
+          <Link href="/about" className={styles.navLink}>
+            Aboutページへ
+          </Link>
+        </div>
         <ThemeImage
           className={styles.logo}
           srcLight="turborepo-dark.svg"
