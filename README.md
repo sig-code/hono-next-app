@@ -1,84 +1,134 @@
-# Turborepo starter
+# Hono Next.js SPA アプリケーション
 
-This Turborepo starter is maintained by the Turborepo core team.
+このプロジェクトはTurborepoを使用したモノレポ構造のNext.js SPAアプリケーションです。静的エクスポート機能を活用し、高速なSPA体験を提供します。
 
-## Using this example
+## 技術スタック
 
-Run the following command:
+- [Next.js](https://nextjs.org/) 15.2.1 - Reactフレームワーク（SPAモード）
+- [React](https://react.dev/) 19.1.0 - UIライブラリ
+- [Turborepo](https://turbo.build/repo) - モノレポ管理ツール
+- [pnpm](https://pnpm.io/) - パッケージマネージャー
+- [TypeScript](https://www.typescriptlang.org/) - 型安全な開発環境
 
-```sh
-npx create-turbo@latest
-```
+## プロジェクト構成
 
-## What's inside?
+### アプリケーション
 
-This Turborepo includes the following packages/apps:
+- `apps/web`: Next.jsを使用したSPAアプリケーション
+  - ホームページとAboutページの基本構成
+  - SPAとしての状態管理デモ（カウンター機能）
+  - 静的エクスポート設定によるデプロイの容易さ
 
-### Apps and Packages
+### パッケージ
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `packages/ui`: 共有Reactコンポーネントライブラリ
+  - ボタン、カードなどの再利用可能なUIコンポーネント
+- `packages/eslint-config`: プロジェクト全体で共有するESLint設定
+- `packages/typescript-config`: プロジェクト全体で共有するTypeScript設定
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## インストールと開発
 
-### Utilities
+### 必要条件
 
-This Turborepo has some additional tools already setup for you:
+- Node.js 20以上（最新版推奨）
+- pnpm 10.8.0以上
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### 開発環境のセットアップ
 
-### Build
+```bash
+# リポジトリのクローン
+git clone <リポジトリURL>
+cd hono-next-app
 
-To build all apps and packages, run the following command:
+# 依存関係のインストール
+pnpm install
 
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
+# 開発サーバーの起動
 pnpm dev
 ```
 
-### Remote Caching
+開発サーバーは http://localhost:3010 で起動します。
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## ビルドと実行
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### ビルド
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
+```bash
+pnpm build
 ```
-cd my-turborepo
+
+### 本番環境での実行
+
+```bash
+pnpm start
+```
+
+### 型チェック
+
+```bash
+pnpm check-types
+```
+
+### リント
+
+```bash
+pnpm lint
+```
+
+## ブランド設定
+
+このプロジェクトでは以下のブランド設定を使用しています：
+
+### カラー
+
+- プライマリ: `#3894FF`
+- 警告: `#FF5252`
+- アクセント: `#29C7C7`
+- 背景:
+  - イエロー: `#F7D666`
+  - ホワイト: `#FFFFFF`
+  - ライトグレー: `#EEEEEE`
+- テキスト:
+  - ダーク: `#000000`
+
+### タイポグラフィ
+
+- フォントファミリー: `M PLUS Rounded 1c, sans-serif`
+- フォントウェイト:
+  - ミディアム: 500
+  - ボールド: 700
+
+### スペーシング
+
+- ベーススペーシング: `15px`
+
+### ボーダー
+
+- ボタンの角丸: `5px`
+
+### シャドウ
+
+- デフォルトシャドウ:
+  - カラー: `#000000`
+  - 不透明度: `10%`
+  - オフセットX: `0`
+  - オフセットY: `2px`
+  - ブラー: `10px`
+
+## リモートキャッシュ
+
+Turborepoは[リモートキャッシング](https://turbo.build/repo/docs/core-concepts/remote-caching)機能を提供しており、ビルドキャッシュをチーム間やCI/CDパイプラインで共有できます。
+
+Vercelアカウントを使用してリモートキャッシュを有効にするには：
+
+```bash
 npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
 npx turbo link
 ```
 
-## Useful Links
+## 参考リンク
 
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- [Next.js ドキュメント](https://nextjs.org/docs)
+- [Turborepo ドキュメント](https://turbo.build/repo/docs)
+- [React ドキュメント](https://react.dev/)
+- [TypeScript ドキュメント](https://www.typescriptlang.org/docs/)
