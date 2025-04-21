@@ -1,0 +1,11 @@
+# Ignore artifacts
+.next
+build
+dist
+coverage
+node_modules
+.turbo
+pnpm-lock.yaml
+
+# Ignore generated files
+*.generated.*
