@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "app/api/**/*": {
+      "memory": 1024,
+      "maxDuration": 60,
+      "runtime": "nodejs18.x",
+      "regions": ["hnd1"],
+      "experimental": {
+        "fluidCompute": true
+      }
+    }
+  }
+}

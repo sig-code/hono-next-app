@@ -3,7 +3,7 @@
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -19,6 +19,53 @@ const ThemeImage = (props: Props) => {
       <Image {...rest} src={srcLight} className="imgLight" />
       <Image {...rest} src={srcDark} className="imgDark" />
     </>
+  );
+};
+
+// APIからデータを取得するコンポーネント
+const HonoApiDemo = () => {
+  const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/hello');
+        if (!response.ok) {
+          throw new Error('APIリクエストに失敗しました');
+        }
+        const data = await response.json();
+        setMessage(data.message);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : '不明なエラーが発生しました');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div className={styles.apiDemo}>
+      <h2>Hono API デモ</h2>
+      {loading ? (
+        <p>読み込み中...</p>
+      ) : error ? (
+        <p className={styles.error}>{error}</p>
+      ) : (
+        <p className={styles.message}>{message}</p>
+      )}
+      <div className={styles.apiLinks}>
+        <a href="/api/hello" target="_blank" rel="noopener noreferrer">
+          API レスポンスを見る
+        </a>
+        <a href="/api/hello/world" target="_blank" rel="noopener noreferrer">
+          パラメータ付きAPI レスポンスを見る
+        </a>
+      </div>
+    </div>
   );
 };
 
@@ -43,6 +90,8 @@ export default function Home() {
             Aboutページへ
           </Link>
         </div>
+
+        <HonoApiDemo />
         <ThemeImage
           className={styles.logo}
           srcLight="turborepo-dark.svg"
