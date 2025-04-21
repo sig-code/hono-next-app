@@ -1,10 +1,85 @@
 {
+  "project": {
+    "name": "Hono Next.js SPA アプリケーション",
+    "description": "Turborepoを使用したモノレポ構造のNext.js SPAアプリケーション。静的エクスポート機能を活用し、高速なSPA体験を提供します。",
+    "version": "0.1.0",
+    "techStack": {
+      "framework": "Next.js 15.2.1",
+      "ui": "React 19.1.0",
+      "monorepo": "Turborepo",
+      "language": "TypeScript 5.8.2",
+      "node": ">=18"
+    }
+  },
   "packageManager": {
     "type": "pnpm",
     "version": "10.8.1",
     "monorepo": {
       "type": "turborepo",
       "workspaces": ["apps/*", "packages/*"]
+    }
+  },
+  "projectStructure": {
+    "apps": {
+      "web": {
+        "type": "Next.js SPA",
+        "port": 3010,
+        "features": ["ホームページ", "Aboutページ", "SPAとしての状態管理デモ（カウンター機能）", "静的エクスポート設定"],
+        "dependencies": {
+          "next": "^15.2.1",
+          "react": "^19.1.0",
+          "react-dom": "^19.1.0",
+          "@repo/ui": "workspace:*"
+        }
+      }
+    },
+    "packages": {
+      "ui": {
+        "type": "共有Reactコンポーネントライブラリ",
+        "components": ["Button", "Card", "Code"],
+        "dependencies": {
+          "react": "^19.1.0",
+          "react-dom": "^19.1.0"
+        }
+      },
+      "eslint-config": {
+        "type": "共有ESLint設定"
+      },
+      "typescript-config": {
+        "type": "共有TypeScript設定"
+      }
+    }
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
+  },
+  "configuration": {
+    "next": {
+      "output": "export"
+    },
+    "turbo": {
+      "ui": "tui",
+      "tasks": {
+        "build": {
+          "dependsOn": ["^build"],
+          "inputs": ["$TURBO_DEFAULT$", ".env*"],
+          "outputs": [".next/**", "!.next/cache/**"]
+        },
+        "lint": {
+          "dependsOn": ["^lint"]
+        },
+        "check-types": {
+          "dependsOn": ["^check-types"]
+        },
+        "dev": {
+          "cache": false,
+          "persistent": true
+        }
+      }
     }
   },
   "brand": {
